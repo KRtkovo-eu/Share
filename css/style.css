@@ -1,0 +1,290 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,600');
+
+body {
+  background:     #ffffff;
+  color:          #3a3a3a;
+  font-family:      'Source Sans Pro', sans-serif;
+  margin:           0;
+  padding:          0 0 60px 0;
+  font-weight:      300;
+}
+
+h1 {
+  color:          #ffffff;
+  font-weight:      600;
+  margin:           0;
+  padding:          0.5em;
+  font-size:        16pt;
+}
+
+h2 {
+  font-weight:      600;
+  font-size:        12pt;
+  padding:          0;
+  margin:           16pt 0 3pt 0;
+}
+
+h2.first {
+  margin:           0 0 3pt 0;
+}
+
+p {
+  font-size:        10pt;
+  padding:          0;
+  margin:           0;
+}
+
+a:link, a:visited {
+  color:            #0c7baf;
+  transition:       all ease-in-out 0.5s;
+}
+
+a:hover {
+  color:            #000000;
+  transition:       all ease-in-out 0.5s;
+}
+
+#header {
+  width:            100%;
+  background:       #0c7baf;
+  posiiton:         relative;
+}
+
+#header div.right {
+  position:         absolute;
+  right:            0.5em;
+  top:              0.5em;
+  cursor:           pointer;
+}
+
+#uploadContainer {
+  width:            100%;
+  background:       #e9e9e9;
+  box-shadow:       0 8px 6px -6px #888888;
+}
+
+#uploadContainer div.content {
+  padding:          1em;
+}
+
+#uploadContainer div.content hr {
+  background:       none;
+  border:           none;
+  border-top:       solid 1px #cccccc;
+}
+
+#uploadContainer #siteInfo, #uploadContainer #stats {
+  display:          none;
+}
+
+#uploadBox {
+  width:            60%;
+  margin:           1em auto auto auto;
+  border:           solid 1px #cccccc;
+  padding:          1em;
+  text-align:       center;
+}
+
+#uploadBox #file {
+  width:            70%;
+  background:       #ffffff;
+  border:           solid 1px #cccccc;
+  padding:          0.3em;
+  transition:       all ease-in-out 0.5s;
+}
+
+#uploadBox #file:hover, #uploadBox #file:focus {
+  border:           solid 1px #0c7baf;
+  transition:       all ease-in-out 0.5s;
+}
+
+#uploadBox #button {
+  width:            25%;
+  background:       #ffffff;
+  border:           solid 1px #cccccc;
+  padding:          0.53em;
+  transition:       all ease-in-out 0.5s;
+}
+
+#uploadBox #button:hover, #uploadBox #button:focus {
+  border:           solid 1px #0c7baf;
+  background:     #d2effc;
+  transition:       all ease-in-out 0.5s;
+}
+
+#filesList {
+  padding:          2em 2em 0 2em;
+}
+
+#filesInner {
+  width:            80%;
+  margin:           auto;
+}
+
+#filesList table {
+  width:            100%;
+  margin:           auto;
+  border-collapse:  collapse;
+  border:           solid 1px #0c7baf;
+}
+
+#filesList table th {
+  padding:          0.2em;
+  border:           solid 1px #ffffff;
+  height:           2.5em;
+  background-color: #0c7baf;
+  color:            #ffffff;
+  transition:       all ease-in-out 0.5s;
+}
+
+#filesList table th.sorting_desc, #filesList table th.sorting_asc {
+  color:            #ffe600;
+  transition:       all ease-in-out 0.5s;
+}
+
+#filesList table td {
+  padding:          0.2em;
+  border:           solid 1px #ffffff;
+}
+
+#filesList table td.center {
+  text-align:       center;
+}
+
+#filesList table tbody tr {
+  transition:       all ease-in-out 0.5s;
+}
+
+#filesList table tr:nth-child(2n+2) {
+  background:       #d2effc;
+}
+
+#filesList table tbody tr:hover {
+  background:       #fcf0b9;
+  transition:       all ease-in-out 0.5s;
+}
+
+#footer {
+  width:            100%;
+  position:         fixed;
+  bottom:           0;
+  left:             0;
+  padding:          0.3em;
+  background:       #e9e9e9;
+  border-top:       solid 1px #cccccc;
+  font-size:        8pt;
+  color:            #3a3a3a;
+  font-family:      sans-serif;
+}
+
+#footer div.right {
+  text-align:       right;
+  float:            right;
+  margin-right:     0.5em;
+}
+
+#qrcontainer {
+    /*display:        none;*/
+    width:          100%;
+    height:         100%;
+    max-width:      100%;
+    max-height:     100%;
+    min-width:      100%;
+    min-height:     100%;
+    position:       fixed;
+    top:            0;
+    left:           0;
+    background:     #0c7bafCC;
+    z-index:        8000;
+    display:        none;
+}
+
+#qrcode {
+    position:       absolute;
+    top:            50%;
+    left:           50%;
+    width:          150px;
+    height:         150px;
+    margin-top:     -75px;
+    margin-left:    -75px;
+    background:     #ffffff;
+}
+
+.small {
+  font-size:        12pt;
+}
+
+.smaller {
+  font-size:        10pt;
+}
+
+.thin {
+  font-weight:      300;
+}
+
+.bold {
+  font-weight:      600;
+}
+
+td.hideText {
+  font-size:        0pt;
+  vertical-align:   middle;
+}
+
+td.hideText img {
+  margin:           5px;
+}
+
+span.copyleft {
+  transform: matrix(-1, 0, 0, 1, 0, 0);
+  display: inline-block;
+}
+
+
+@media all and (max-width: 900px) {
+  #filesInner {
+    width:            100%;
+  }
+}
+
+@media all and (max-width: 640px) {
+  #header h1 {
+    text-align:       center;
+  }
+
+  #uploadBox {
+    width:            80%;
+  }
+
+  #footer, #header div.right {
+    display:          none;
+  }
+
+  .canHide {
+    display:          none;
+  }
+}
+
+@media all and (max-width: 440px) {
+  #filesList {
+    padding:          1em 0 0 0;
+    font-size:        9pt;
+  }
+
+  .small { font-size: 9pt;}
+  .smaller { font-size: 8pt;}
+}
+
+@media all and (max-width: 350px) {
+  #header h1 span.small {
+    display:          none;
+  }
+
+  #uploadBox #file {
+    width:            85%;
+  }
+
+  #uploadBox #button {
+    width:            70%;
+  }
+}

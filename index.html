@@ -1,0 +1,158 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8">
+  <meta name="author" content="Ondřej Kotas, KRtkovo.eu - design studio" />
+  <meta name="description" content="KRtkovo.eu" />
+  <meta name="keywords" content="share,sdílení,souborů" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  
+  <title>Share KRtkovo.eu &bull; sdílení malých souborů</title>
+  
+  <link href="css/style.css" rel="stylesheet" type="text/css" media="screen,projection" />
+  <link href="favicon.ico" rel="icon" />
+  <link href="css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/hidenshow.js"></script>
+  <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+</head>
+
+<body>
+    <div id="header">
+        <h1>Share KRtkovo.eu<span class="small thin">&nbsp;&bull;&nbsp;sdílení malých souborů</span></h1>
+        <div class="right" title="The Game :)">
+            <img src="images/profil.png" />
+        </div>
+    </div>
+
+    <div id="uploadContainer">
+        <div class="content">
+            <h2 class="first"><a href="#" onclick="javascript:hideShow('siteInfo',2);">Kam jsem se to dostal?</a></h2>
+            <div id="siteInfo">
+                <p>
+                    Share KRtkovo.eu je webové úložiště pro malé soubory. Často potřebuji nasdílet nějaký soubor mezi zařízeními v různých koutech světa, takže jsem si vyrobil tento systém a dávám jej k užití i dalším osobám.
+                </p>
+                
+                <h2>Co se děje s uloženými soubory?</h2>
+                <p>
+                    Soubory zde budou uložené maximálně měsíc, pokud administrátor nevysloví pro daný soubor výjimku.<br />
+                    Nahrávat lze soubory do maximální velikosti 200 MB.<br />
+                    Administrátor si vyhrazuje právo vymazat soubory dle svého uvážení (tedy i soubory uložené kratší dobu).<br />
+                </p>
+    
+                <h2>A co autorská práva?</h2>
+                <p>
+                    Administrátor za obsah uložený na tomto webu neručí, což je v souladu s platnou legislativou České republiky. Pokud si myslíte, že je zde některý soubor umístěn neoprávněně, kontaktujte mne na mailu <a href="mailto:ok@krtkovo.eu">ok@krtkovo.eu</a> se žádostí o smazání tohoto souboru - bude tak učiněno na základě doložení vašeho vlastnictví daného kopírovacího monopolu.
+                </p>                
+            </div>
+        
+            <hr />
+
+            <h2>Nahrát soubor</h2>
+            <div id="uploadBox">
+                <form method="post" action="upload.php" enctype="multipart/form-data">
+                    <input type="file" name="soubor" id="file" />
+                    <input type="submit" value="Upload!" id="button" />
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="filesList">
+        <div id="filesInner"></div>
+    </div>
+
+    <div id="qrcontainer" onclick="javascript:hideShow('qrcontainer',3);">
+        <img id="qrcode" />
+    </div>
+
+    <div id="footer">
+        Kapacita&nbsp;úložiště:&nbsp;<span id="storagecapacity"></span>
+        &bull;
+        Využité&nbsp;místo:&nbsp;<span id="usedcapacity"></span>
+        &bull;
+        Nahraných&nbsp;souborů:&nbsp;<span id="filescount"></span>
+        &bull;
+        Nejpopulárnější&nbsp;typ&nbsp;souboru:&nbsp;<span id="populartype"></span>
+        <div class="right"><span class="copyleft">©</span> <a href="http://krtkovo.eu/">KRtkovo.eu</a> 2005-2019</div>
+    </div>
+
+    <script type="text/javascript">
+        function getRemote(remote_url) {
+            return $.ajax({
+                type: "GET",
+                url: remote_url,
+                async: false
+            }).responseText;
+        }
+
+        var serverContent = JSON.parse(getRemote("listFiles.php"));
+
+        // Fill statistics in footer
+        $("#storagecapacity").html(serverContent[0].statistics[0].storagecapacity);
+        $("#usedcapacity").html(serverContent[0].statistics[0].usedcapacity);
+        $("#filescount").html(serverContent[0].statistics[0].totalfiles);
+        $("#populartype").html(serverContent[0].statistics[0].populartype);
+
+        // Create table with files
+        var number_of_rows = serverContent[0].statistics[0].totalfiles;
+        var number_of_cols = 4;
+        var table_body = "<table id=\"filesTable\" border=\"1\">";
+
+        table_body += "<thead><tr>";
+        table_body += "<th class=\"canHide\">Typ</th>";
+        table_body += "<th>Název souboru</th>";
+        table_body += "<th class=\"canHide\">Datum přidání</th>";
+        table_body += "<th>Velikost</th>";
+        table_body += "</tr></thead><tbody>";
+
+        for(var i=0; i<number_of_rows; i++){
+            table_body += "<tr>";                
+            
+            table_body += "<td class=\"center canHide hideText\">";
+            table_body += serverContent[0].files[i].filetype;
+            table_body += "<img src=\"";
+            table_body += serverContent[0].files[i].icon;
+            table_body += "\" alt=\""
+            table_body += serverContent[0].files[i].filetype;
+            table_body += "\" /></td>";
+
+            table_body += "<td><a href=\"files/";
+            table_body += serverContent[0].files[i].filename;
+            table_body += "\">";
+            table_body += serverContent[0].files[i].filename;
+            table_body += "</a>, ";
+            table_body += "<a href=\"javascript:$('#qrcode').attr('src','qr.php?filename=";
+            table_body += serverContent[0].files[i].filename;
+            table_body += "');";
+            table_body += "hideShow('qrcontainer', 4);\" class=\"smaller\">";
+            table_body += "QR";
+            table_body += "</a>";
+            table_body += "</td>";
+
+            table_body += "<td class=\"center canHide\">";
+            table_body += serverContent[0].files[i].filecreated;
+            table_body += "</td>";
+
+            table_body += "<td class=\"center\">";
+            table_body += serverContent[0].files[i].filesize;
+            table_body += "</td>";
+
+            table_body += "</tr>";
+        }
+        table_body += "</tbody></table>";
+        $("#filesInner").html(table_body);
+
+        $(document).ready(function(){
+            $('#filesTable').DataTable( {
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                "order": [[ 1, "asc" ]],
+                stateSave: true
+            } );
+        });
+    </script>
+
+</body>
+</html>
