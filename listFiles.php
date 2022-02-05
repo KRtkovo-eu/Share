@@ -10,7 +10,7 @@ $FileTypes = array();
 function file_extension($filename)
 {
     $path_info = pathinfo($filename);
-    return $path_info['extension'];
+    return (isset($path_info['extension']) ? $path_info['extension'] : "");
 }
 
 function array_most_common($input) 
